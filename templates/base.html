@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Notes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">Главная</a>
+        {% if session.get('user_id') %}
+            <a href="{{ url_for('notes') }}">Мои заметки</a>
+            <a href="{{ url_for('logout') }}">Выйти</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Войти</a>
+            <a href="{{ url_for('register') }}">Регистрация</a>
+        {% endif %}
+    </nav>
+    <hr>
+    <div class="container">
+        {% if user_count is defined %}
+        <h2>Добро пожаловать в сервис заметок!</h2>
+        <p>Сервис позволяет зарегистрироваться, создавать и хранить личные заметки. 
+           Обратите внимание, что текущая версия приложения уязвима к краже сессии — это тестовый пример.
+           В будущем мы добавим дополнительные механизмы безопасности.</p>
+        <p>Всего пользователей: <strong>{{ user_count }}</strong></p>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
