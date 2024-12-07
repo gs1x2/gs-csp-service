@@ -2,8 +2,12 @@
 {% block content %}
 <h2>Регистрация</h2>
 <form method="post">
-    <label>Имя пользователя: <input type="text" name="username" required></label><br>
-    <label>Пароль: <input type="password" name="password" required></label><br>
+    <label>Имя пользователя:<br>
+        <input type="text" name="username" required>
+    </label>
+    <label>Пароль:<br>
+        <input type="password" name="password" required>
+    </label>
     <input type="submit" value="Зарегистрироваться">
 </form>
 {% endblock %}
