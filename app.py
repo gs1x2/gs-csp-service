@@ -21,7 +21,9 @@ def init_db():
 
 @app.route('/')
 def index():
-    return render_template('base.html')
+    db = get_db()
+    user_count = db.execute('SELECT COUNT(*) as cnt FROM users').fetchone()['cnt']
+    return render_template('base.html', user_count=user_count)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -46,6 +48,7 @@ def login():
         user = db.execute('SELECT id FROM users WHERE username=? AND password=?', (username, password)).fetchone()
         if user:
             session['user_id'] = user['id']
+            session['username'] = username
             session.permanent = True
             return redirect(url_for('notes'))
         else:
@@ -68,6 +71,54 @@ def notes():
         db.commit()
     user_notes = db.execute('SELECT id, content FROM notes WHERE user_id=?', (session['user_id'],)).fetchall()
     return render_template('notes.html', notes=user_notes)
+
+@app.route('/update_note', methods=['POST'])
+def update_note():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    note_id = request.form.get('note_id')
+    new_content = request.form.get('new_content')
+    db = get_db()
+    db.execute('UPDATE notes SET content=? WHERE id=? AND user_id=?', (new_content, note_id, session['user_id']))
+    db.commit()
+    return redirect(url_for('notes'))
+
+@app.route('/delete_note', methods=['POST'])
+def delete_note():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    note_id = request.form.get('note_id')
+    db = get_db()
+    db.execute('DELETE FROM notes WHERE id=? AND user_id=?', (note_id, session['user_id']))
+    db.commit()
+    return redirect(url_for('notes'))
+
+@app.route('/admin', methods=['GET'])
+def admin_panel():
+    if 'username' not in session or session['username'] != 'admin':
+        return redirect(url_for('index'))
+
+    db = get_db()
+    users = db.execute('''SELECT u.id, u.username, COUNT(n.id) AS notes_count
+                          FROM users u
+                          LEFT JOIN notes n ON u.id = n.user_id
+                          WHERE u.username != 'admin'
+                          GROUP BY u.id, u.username''').fetchall()
+
+    return render_template('admin.html', users=users)
+
+@app.route('/admin/delete_user', methods=['POST'])
+def admin_delete_user():
+    if 'username' not in session or session['username'] != 'admin':
+        return redirect(url_for('index'))
+    user_id = request.form.get('user_id')
+    db = get_db()
+    # Удаляем заметки пользователя
+    db.execute('DELETE FROM notes WHERE user_id=?', (user_id,))
+    # Удаляем самого пользователя
+    db.execute('DELETE FROM users WHERE id=?', (user_id,))
+    db.commit()
+    return redirect(url_for('admin_panel'))
 
 if __name__ == '__main__':
     if not os.path.exists(app.config['DATABASE']):

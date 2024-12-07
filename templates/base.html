@@ -18,7 +18,14 @@
     </nav>
     <hr>
     <div class="container">
-    {% block content %}{% endblock %}
+        {% if user_count is defined %}
+        <h2>Добро пожаловать в сервис заметок!</h2>
+        <p>Сервис позволяет зарегистрироваться, создавать и хранить личные заметки. 
+           Обратите внимание, что текущая версия приложения уязвима к краже сессии — это тестовый пример.
+           В будущем мы добавим дополнительные механизмы безопасности.</p>
+        <p>Всего пользователей: <strong>{{ user_count }}</strong></p>
+        {% endif %}
+        {% block content %}{% endblock %}
     </div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>

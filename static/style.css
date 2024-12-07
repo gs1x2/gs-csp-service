@@ -63,7 +63,7 @@ input[type=password],
 textarea {
     width: 100%;
     padding: 8px;
-    margin-top: 5px;
+    margin-top: 1px;
     border-radius: 4px;
     border: 1px solid #ccc;
     transition: border-color 0.3s;
@@ -108,3 +108,79 @@ ul li {
 ul li:hover {
     transform: translateX(5px);
 }
+
+.note-item {
+    position: relative;
+    padding: 10px;
+    background: #f7f7f7;
+    margin: 5px 0;
+    border-radius: 4px;
+    transition: transform 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.note-item:hover {
+    transform: translateX(5px);
+}
+
+.actions {
+    margin-left: 10px;
+}
+
+.actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 5px;
+    font-size: 1.1em;
+    line-height: 1;
+    transition: transform 0.2s;
+}
+
+.actions button:hover {
+    transform: scale(1.1);
+}
+
+.edit-form {
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+    align-items: center;
+}
+
+.edit-form input[type="text"] {
+    width: 200px;
+    padding: 9px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    flex: 1;
+    margin-right: 5px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.confirm-btn {
+    background: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px;
+    cursor: pointer;
+    margin-left: 0px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.confirm-btn:hover {
+    background: #444;
+}
+
+.note-content {
+    flex: 1;
+    margin-right: 10px;
+    white-space: pre-wrap;
+}
+
