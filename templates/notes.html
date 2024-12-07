@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Мои заметки</h2>
+<form method="post">
+    <textarea name="content" placeholder="Новая заметка" required></textarea><br>
+    <input type="submit" value="Добавить">
+</form>
+<ul>
+    {% for note in notes %}
+    <li>{{ note[1] }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
