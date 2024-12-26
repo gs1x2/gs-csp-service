@@ -1,0 +1,36 @@
+{% extends "admin_base.html" %}
+{% block content %}
+<h1>Список сессий</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Session ID</th>
+            <th>User ID</th>
+            <th>IP</th>
+            <th>User-Agent</th>
+            <th>Score</th>
+            <th>Created</th>
+            <th>Updated</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for s in sessions %}
+        <tr>
+            <td>{{ s.session_id }}</td>
+            <td>{{ s.user_id }}</td>
+            <td>{{ s.ip_address }}</td>
+            <td>{{ s.user_agent }}</td>
+            <td>{{ s.suspicious_score }}</td>
+            <td>{{ s.created_at }}</td>
+            <td>{{ s.updated_at }}</td>
+            <td>
+                <form method="post" action="{{ url_for('admin_bp.delete_session', session_id=s.session_id) }}">
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

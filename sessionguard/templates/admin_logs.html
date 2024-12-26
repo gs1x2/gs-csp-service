@@ -1,0 +1,26 @@
+{% extends "admin_base.html" %}
+{% block content %}
+<h1>Логи</h1>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Timestamp</th>
+            <th>Type</th>
+            <th>Message</th>
+            <th>IP</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for log in logs %}
+        <tr>
+            <td>{{ log.id }}</td>
+            <td>{{ log.timestamp }}</td>
+            <td>{{ log.log_type }}</td>
+            <td>{{ log.message }}</td>
+            <td>{{ log.ip_address }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

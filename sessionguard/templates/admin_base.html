@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Admin Panel</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0; padding: 0;
+            background: #f0f0f0;
+        }
+        nav {
+            background: #333; color: #fff; padding: 10px;
+        }
+        nav a {
+            color: #fff; text-decoration: none; margin-right: 10px;
+        }
+        .container {
+            margin: 20px;
+            background: #fff;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        table {
+            border-collapse: collapse; width: 100%;
+        }
+        th, td {
+            border: 1px solid #ccc; padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('admin_bp.admin_index') }}">Главная</a>
+        <a href="{{ url_for('admin_bp.admin_sessions') }}">Сессии</a>
+        <a href="{{ url_for('admin_bp.admin_logs') }}">Логи</a>
+    </nav>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
